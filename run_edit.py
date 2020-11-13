@@ -49,7 +49,7 @@ class DataArguments:
 parser = HfArgumentParser((ModelArguments, DataArguments, TrainingArguments))
 model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
-with open("edit_data.json", "r") as read_file:
+with open("data/edit_data.json", "r") as read_file:
     data = json.load(read_file)
 
 df = pd.DataFrame(data)
@@ -58,10 +58,12 @@ tokenizer = AutoTokenizer.from_pretrained(model_args.model_name_or_path)
 
 def preprocess_function(examples):
     #  prompt = str(examples['body'])
-    prompt = str(examples['abstract'])
+    #  prompt = str(examples['abstract'])
+    prompt = str(examples['headline'])
     choice0, choice1, choice2 = str(examples['thesis']), str(examples['anti-thesis']), str(examples['third-option'])
     choices = [choice0, choice1, choice2]
     random.shuffle(choices)
+    # Specify max_length in encoding when not using body
     encoding = tokenizer([prompt, prompt, prompt], choices, return_tensors='pt', max_length=512, padding='max_length', truncation=True)
     encoding["label"] = choices.index(choice0)
     return encoding
