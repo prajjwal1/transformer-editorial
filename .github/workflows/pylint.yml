@@ -18,7 +18,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest black isort
         pip install pylint
-        pip install sklearn torch
+        pip install sklearn pandas datasets torch
         pip install git+https://github.com/huggingface/transformers
     - name: Analysing the code with pylint
       run: |
