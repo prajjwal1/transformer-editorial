@@ -53,7 +53,7 @@ class DataArguments:
 parser = HfArgumentParser((ModelArguments, DataArguments, TrainingArguments))
 model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
-with open(os.path.join(data_args.data_path,"editorial_main.json"), "r") as read_file:
+with open(os.path.join(data_args.data_path), "r") as read_file:
     data = json.load(read_file)
 
 df = pd.DataFrame(data)
